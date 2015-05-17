@@ -49,7 +49,7 @@ class Equallateral: public Triangle{
   //todo find area using side basic geometry remember the angles and stuff im too lazy
   public:
     int area(int side){
-      return 0;
+      return 1;
     }
     int perimeter(int side){
       return side*3;
