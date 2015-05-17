@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <string>
+#include <math.h>
 using namespace std;
 
 //every class is derived from this polygon class
@@ -38,9 +39,11 @@ class Isosceles: public Triangle{
 //todo add 3 sides together to find perimeter  
   public:
     int area(int x, int y){
+      
       return 0;
     }
     int perimeter(int x, int y){
+      
       return 0;
     }
 
@@ -59,8 +62,12 @@ class Equallateral: public Triangle{
 class Quadrilateral: public Polygon{
   
   public:
-    virtual int area() = 0;
-    virtual int perimeter() = 0;
+    virtual int area(){
+      return 0;
+    }
+    virtual int perimeter(){
+      return 0;
+    };
 
 };
 
@@ -83,7 +90,7 @@ class Rectangle: public Quadrilateral{
       return height * width;
     }
     int perimeter(int height, int width){
-      return (2 * height) * (2 * width);
+      return (2 * height) + (2 * width);
     }
 
 };
@@ -140,13 +147,34 @@ int main() {
       int side = 0;
       Equallateral triangle;
       cin >> side;
-      cout << triangle.area(side) << "is your area and your perimeter is: " << triangle.perimeter(side);
+      cout << triangle.area(side) << "is your area and your perimeter is: " << triangle.perimeter(side) << "\n";
       
     }
   }
+  
   else if(polygon_type == "quadrilateral"){
-    cout << "Is your quadrilateral a square or a rectangle";
+    cout << "Is your quadrilateral a square or a rectangle? ";
     cin >> secondary_type;
+    
+    if(secondary_type == "square"){
+      cout << "Please enter the length of a side of the square ";
+      int side = 0;
+      cin >> side;
+      Square s;
+      cout << s.area(side) << " is your area " << s.perimeter(side) << " is your perimeter" << "\n";
+    }
+    
+    else if(secondary_type == "rectangle"){
+      cout << "Please enter the height: ";
+      int height = 0;
+      int width = 0;
+      cin >> height;
+      cout << "Enter the width now: ";
+      cin >> width;
+      Rectangle r;
+      cout << r.area(height, width) << " is your area " << r.perimeter(height, width) << " is your perimeter" << "\n";
+    }
+    
   }
   else if(polygon_type == "pentagon"){
     cout << "Please enter the length of one of the sides.";
