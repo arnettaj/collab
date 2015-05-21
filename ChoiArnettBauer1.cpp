@@ -115,7 +115,7 @@ class Hexagon: public Polygon{
 //implement area of hexagon
   public:
     float area(int side){
-      return (3/2)*sqrt(3)*pow(side,2);
+      return (3.0/2.0)*sqrt(3.0)*pow(side,2);
     }
     int perimeter(int side){
       return side * 6;
