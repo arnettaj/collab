@@ -1,6 +1,9 @@
 //Author: Aaron Choi, Austin Arnett, Brian Bauer
 //Course title: Data Structures
-//Course Number: CS2028
+//Course Number: 20CS2028
+//Abstract:  This program finds the area and parimeter of the shape chosen.  The polygons are all regular.
+//Preconditions:  Follow the prompts.  Enter the name exactly as it appears.
+//Postconditions: Answer printed out.
 #include <iostream>
 #include <fstream>
 #include <stdlib.h>
@@ -38,24 +41,15 @@ class Isosceles: public Triangle{
 //todo find area
 //todo add 3 sides together to find perimeter
   public:
-    int area(int x, int y){
-      float hypo;
+    int area(int base, int other){
+      float height;
       float answer;
-      if(x>y){
-        hypo= sqrt(pow(x,2)-pow(y,2));
-        answer=(y/2)*hypo;
-      }
-      else if(y>x){
-        hypo= sqrt(pow(y,2)-pow(x,2));
-        answer=(x/2)*hypo;
-      }
-      return hypo;
+      height= sqrt(pow(other,2)-pow(base/2,2));
+      answer=base*height/2;
+      return answer;
     }
     int perimeter(int x, int y){
-      int answer;
-      if(x>=y){answer=2*x+y;}
-      else if(y>=x){answer=2*y+x;}
-      return answer;
+      return x+2*y;
     }
 
 };
@@ -148,10 +142,17 @@ int main() {
   cin >> polygon_type;
 
   if(polygon_type == "triangle"){
-    cout << "Is your triangle a isolsceles or equalateral triangle?";
+    cout << "Is your triangle a isosceles or equalateral triangle?";
     cin >> secondary_type;
     if(secondary_type == "isosceles"){
-      cout << "Please enter the height and width of the triangle.";
+      int side1;
+      int side2;
+      Isosceles triangle;
+      cout << "Please enter the base of the triangle.";
+      cin>>side1;
+      cout<<"Please enter the length of one of the two equal sides.";
+      cin>>side2;
+      cout<< "The area is "<<triangle.area(side1, side2)<<" and the perimeter is "<<triangle.perimeter(side1, side2)<<"."<<endl;
     }
     else if(secondary_type =="equalateral"){
       cout << "Please enter one of the sides of the triangle.";
