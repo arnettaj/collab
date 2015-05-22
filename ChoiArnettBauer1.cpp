@@ -1,7 +1,7 @@
 //Author: Aaron Choi, Austin Arnett, Brian Bauer
 //Course title: Data Structures
 //Course Number: 20CS2028
-//Abstract:  This program finds the area and parimeter of the shape chosen.  The polygons are all regular. Only special polygons are isoceles, equalateral triangles and squares and rectangles which are the only quadrilaterals calculated. We did not see a scalene triangle req. so dont try that.
+//Abstract:  This program finds the area and parimeter of the shape chosen.  The polygons are all regular. Only special polygons are isoceles, equalateral triangles and squares and rectangles which are the only quadrilaterals calculated. We did not see a scalene triangle req. so dont try that. You must choose from the list the program gives you.
 //Preconditions:  Follow the prompts.  Enter the name exactly as it appears or else.
 //Postconditions: Answer printed out. Or a giant pikachu will appear and eat you.
 #include <iostream>
@@ -65,6 +65,13 @@ class Isosceles: public Triangle{
       cin>>side2;
       area_poly = iso_area(side1, side2);
       perimeter_poly = iso_perimeter(side1, side2);
+      if((side1 + side2) < side2){
+        cout << "Who you tryna fool these sides can't make up a triangle";
+      }
+      else if((side2+side2)< side1){
+        cout << "Who you tryna fool these sides can't make up a triangle";
+      }
+      else
       cout<< "The area is "<< area() << " and the perimeter is " << perimeter() <<endl;
     }
     virtual float area(){
