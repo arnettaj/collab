@@ -14,20 +14,20 @@ Postconditions: returns a table with the times of the different algorithms on di
 
 using namespace std;
 
-bool isUnique1(int[] A, first, last){
+bool isUnique1(int A[], int first, int last){
     if(first>=last){
         return true;
     }
-    if(!isUnique1(A, first, last-1){
+    if(!isUnique1(A, first, last-1)){
         return false;
     }
-    if(!isUnique1(A, first+1, last){
+    if(!isUnique1(A, first+1, last)){
        return false;
     }
     return (A[first]!=A[last]);
 }
 
-bool isUnique2(int[] A, first, last){
+bool isUnique2(int A[], int first, int last){
     if(first>=last){
         return true;
     }
@@ -41,13 +41,13 @@ bool isUnique2(int[] A, first, last){
     return true;
 }
 
-bool isUnique3(int[] A, first, last){
+bool isUnique3(int A[], int first, int last){
     if(first>=last){
         return true;
     }
-    sorter(A, first, last);
+    //sorter(A, first, last);
     for(int i=first; i<last; i++){
-        if(A[i]==a[i+1]){
+        if(A[i]==A[i+1]){
             return false;
         }
     }
@@ -57,7 +57,7 @@ bool isUnique3(int[] A, first, last){
 int * randomArray(int length){
     srand(time(NULL));
     int newarray[length];
-    rand();
+
     for(int k=0; k<length; k++){
         newarray[k]=rand() % length +1;
     }
@@ -70,8 +70,8 @@ int * selectionSort(int tharray[], int length){
     int j;
     int k;
     int swapper;
-    for( j=0; j<length; j++){
-        for(k=0; k<length; k++){
+    for( j=0; j<length-1; j++){
+        for(k=j+1; k<length; k++){
             if(tharray[k]<tharray[minni]){
                 k=minni;
             }
@@ -85,8 +85,34 @@ int * selectionSort(int tharray[], int length){
     return tharray;
 }
 
+int * bubbleSort(int A[], int length){
+    bool done=false;
+    int temp;
+    while(!done){
+        done=true;
+        for(int k=1; k< length; k++){
+            if(A[k]> A[k-1]){
+                temp=A[k];
+                A[k]=A[k-1];
+                A[k-1]=temp;
+                done=false;
+            }
+        }
+    }
+    return A;
+}
+
 int main(){
-
-
+    int length=20;
+    int * Array;
+    Array=randomArray(length);
+    for(int i=0; i<length; i++){
+        cout<<Array[i]<<endl;
+    }
+    cout<<endl;
+    Array=bubbleSort(Array, length);
+    for(int i=0; i<length; i++){
+        cout<<Array[i]<<endl;
+    }
     return 0;
 }
