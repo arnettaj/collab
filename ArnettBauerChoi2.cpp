@@ -54,26 +54,23 @@ bool isUnique3(int A[], int first, int last){
     return true;
 }
 
-int * randomArray(int length){
-    srand(time(NULL));
-    int newarray[length];
-
+void randomArray(int length, int A[]){      //assigns values to the inputted array.
+    srand((unsigned)time(NULL));
     for(int k=0; k<length; k++){
-        newarray[k]=rand() % length +1;
+        A[k]=rand() % (length*2) +1;
+        cout<<"value given: "<<A[k]<<endl;
     }
-    return newarray;
+    return;
 }
 
 
-int * selectionSort(int tharray[], int length){
+void selectionSort(int tharray[], int length){   //selection sort
     int minni=0;
-    int j;
-    int k;
     int swapper;
-    for( j=0; j<length-1; j++){
-        for(k=j+1; k<length; k++){
+    for(int j=0; j<length-1; j++){
+        for(int k=j+1; k<length; k++){
             if(tharray[k]<tharray[minni]){
-                k=minni;
+                minni=k;
             }
         }
         if(minni!=j){
@@ -82,16 +79,16 @@ int * selectionSort(int tharray[], int length){
             tharray[j]=swapper;
         }
     }
-    return tharray;
+    return;
 }
 
-int * bubbleSort(int A[], int length){
+void bubbleSort(int A[], int length){   //classic bubble sort
     bool done=false;
     int temp;
     while(!done){
         done=true;
         for(int k=1; k< length; k++){
-            if(A[k]> A[k-1]){
+            if(A[k]< A[k-1]){
                 temp=A[k];
                 A[k]=A[k-1];
                 A[k-1]=temp;
@@ -99,20 +96,27 @@ int * bubbleSort(int A[], int length){
             }
         }
     }
-    return A;
+    return;
 }
+
 
 int main(){
     int length=20;
-    int * Array;
-    Array=randomArray(length);
-    for(int i=0; i<length; i++){
-        cout<<Array[i]<<endl;
+    int Array[length];
+    randomArray(length,Array);
+    int bubbleArray[length];
+    for(int k=0; k<length; k++){  //makes bubbleArray a copy of Array
+        bubbleArray[k]=Array[k];
     }
-    cout<<endl;
-    Array=bubbleSort(Array, length);
-    for(int i=0; i<length; i++){
-        cout<<Array[i]<<endl;
+    bubbleSort(bubbleArray, length);
+
+    int selectionArray[length];
+    for(int k=0; k<length; k++){  //makes bubbleArray a copy of Array
+        selectionArray[k]=Array[k];
+    }
+    selectionSort(selectionArray, length);  // selection sort
+    for(int k=0; k<length; k++){
+        cout<<"selection: "<<selectionArray[k]<<endl;
     }
     return 0;
 }
