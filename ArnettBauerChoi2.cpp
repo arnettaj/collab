@@ -11,6 +11,7 @@ Postconditions: returns a table with the times of the different algorithms on di
 #include<iostream>
 #include<stdlib.h>
 #include<time.h>
+#include<vector>
 
 using namespace std;
 
@@ -99,6 +100,91 @@ void bubbleSort(int A[], int length){   //classic bubble sort
     return;
 }
 
+void vectorSelectSort(vector<int> A){
+    int tempArray[A.size()];
+    for(unsigned int k=0; k<A.size(); k++){   //make vector into array
+        tempArray[k]=A[k];
+    }
+    selectionSort(tempArray, A.size());
+    for(unsigned int k=0; k<A.size(); k++){    //put sorted array into vector
+        A[k]=tempArray[k];
+    }
+    return;
+}
+
+void bucketSort(int Array[], int length){
+    int minni=Array[0];
+    int maxxi=Array[0];
+    for(int k=0; k<length; k++){
+        if(Array[k]<minni){
+            minni=Array[k];
+        }
+        if(Array[k]>maxxi){
+            maxxi=Array[k];
+        }
+    }
+    if(length<=20){
+        selectionSort(Array,length);
+        cout<<"SELECTION SORT USED"<<endl;
+    }
+    else{
+        int fakerange=(maxxi-minni)-((maxxi-minni)%5);
+        vector<int> firstVector;  //buckets
+        vector<int> secondVector;
+        vector<int> thirdVector;
+        vector<int> fourthVector;
+        vector<int> fifthVector;
+        int firstMax=fakerange/5+minni;
+        int secondMax=(fakerange/5)*2+minni;
+        int thirdMax=(fakerange/5)*3+minni;
+        int fourthMax=(fakerange/5)*4+minni;
+        for(int k=0; k<length; k++){       //sorts the array into the buckets
+            if(Array[k]<=firstMax){
+                firstVector.push_back(Array[k]);
+            }
+            else if(Array[k]<=secondMax){
+                secondVector.push_back(Array[k]);
+            }
+            else if(Array[k]<=thirdMax){
+                thirdVector.push_back(Array[k]);
+            }
+            else if(Array[k]<=fourthMax){
+                fourthVector.push_back(Array[k]);
+            }
+            else if(Array[k]>fourthMax){
+                fifthVector.push_back(Array[k]);
+            }
+        }
+        vectorSelectSort(firstVector);  //sorts the vectors with selection sort
+        vectorSelectSort(secondVector);
+        vectorSelectSort(thirdVector);
+        vectorSelectSort(fourthVector);
+        vectorSelectSort(fifthVector);
+
+        int counter=0;
+        for(unsigned int k=counter; k<firstVector.size(); k++){       //combines the vectors into the array
+            Array[k]=firstVector[k];
+        }
+        counter=firstVector.size();
+        for(unsigned int k=counter; k<counter+secondVector.size(); k++){
+            Array[k]=secondVector[k];
+        }
+        counter=counter+secondVector.size();
+        for(unsigned int k=counter; k<counter+thirdVector.size(); k++){
+            Array[k]=thirdVector[k];
+        }
+        counter=counter+thirdVector.size();
+        for(unsigned int k=counter; k<counter+fourthVector.size(); k++){
+            Array[k]=fourthVector[k];
+        }
+        counter=counter+fourthVector.size();
+        for(unsigned int k=counter; k<counter+fifthVector.size(); k++){
+            Array[k]=fifthVector[k];
+        }
+    }
+    return;
+}
+
 
 int main(){
     int length=20;
@@ -111,12 +197,18 @@ int main(){
     bubbleSort(bubbleArray, length);
 
     int selectionArray[length];
-    for(int k=0; k<length; k++){  //makes bubbleArray a copy of Array
+    for(int k=0; k<length; k++){  //makes selectionArray a copy of Array
         selectionArray[k]=Array[k];
     }
     selectionSort(selectionArray, length);  // selection sort
+
+    int bucketArray[length];
+    for(int k=0; k<length; k++){  //makes bucketArray a copy of Array
+        bucketArray[k]=Array[k];
+    }
+    bucketSort(bucketArray, length);
     for(int k=0; k<length; k++){
-        cout<<"selection: "<<selectionArray[k]<<endl;
+        cout<<"bucket: "<<bucketArray[k]<<endl;
     }
     return 0;
 }
