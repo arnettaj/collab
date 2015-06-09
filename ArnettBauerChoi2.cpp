@@ -284,8 +284,8 @@ int main(){
             cout<<QuickArray[k]<<"|";
         }
         cout << endl;
-*//*
-        for(int k=0; k<34; k++){
+*/
+        for(int length=0; length<34; length++){
             int Array[length];
             randomArray(length,Array);
 
@@ -299,8 +299,8 @@ int main(){
         cout << "After Algorithm 1" << std::endl;
         double time1=(std::clock() - start1) / (double)(CLOCKS_PER_SEC / 1000);
         cout<<"length of "<<length<<" time--> isUnique1: "<<time1/1000.0<<" sec"<<endl;
-        }*/
-/*
+        }
+
   for(int length=195000; length<=1000000; length=length+5000){
      int Array[length];
      randomArray(length,Array);
@@ -312,7 +312,7 @@ int main(){
      }
      double time2=(std::clock() - start2) / (double)(CLOCKS_PER_SEC / 1000);
      cout<<"length of "<<length<<" time--> isUnique2: "<<time2/1000.0<<" sec"<<endl;
-  }*/
+  }
 
   for(int length=150000; length<1000000; length=length+5000){
      int Array[length];
