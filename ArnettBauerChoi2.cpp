@@ -19,14 +19,30 @@ using namespace std;
 
 
 void randomArray(int length, int A[]){      //assigns values to the inputted array.
-    srand((unsigned)time(NULL));
     for(int k=0; k<length; k++){
-        A[k]=rand() % (length*2) +1;
-        cout<<"value given: "<<A[k]<<endl;
+        A[k]=length-k;
+    }
+    int temp;
+    for(int k=0; k<length; k=k+2){
+        temp=A[k+1];
+        A[k+1]=A[k];
+        A[k]=temp;
     }
     return;
 }
 
+void PrintArray(int length, int A[]){
+    if(length>20){
+        return;
+    }
+    std::cout << "Given: [";
+    for(int i = 0; i < length-1; i++){
+        std::cout << A[i] << ", ";
+    }
+    std::cout << A[length-1] << "]" << std::endl;
+
+    return;
+}
 
 void selectionSort(int tharray[], int length){   //selection sort
     int minni=0;
@@ -68,10 +84,40 @@ void vectorSelectSort(vector<int> A){//helper function for bucketsort
     for(unsigned int k=0; k<A.size(); k++){   //make vector into array
         tempArray[k]=A[k];
     }
+    A.clear();
     selectionSort(tempArray, A.size());
     for(unsigned int k=0; k<A.size(); k++){    //put sorted array into vector
-        A[k]=tempArray[k];
+        A.push_back(tempArray[k]);
     }
+    return;
+}
+
+void QuickSort(int Array[], int first, int last){
+    int i = first, j = last;
+    int tmp;
+    int pivot = Array[first + (last-first)/2];
+
+    // partition
+    while (i <= j) {
+        while (Array[i] < pivot)
+              i++;
+        while (Array[j] > pivot)
+              j--;
+        if (i <= j) {
+              tmp = Array[i];
+              Array[i] = Array[j];
+              Array[j] = tmp;
+              i++;
+              j--;
+        }
+    };
+
+    // recursion
+    if (first < j)
+        QuickSort(Array, first, j);
+
+    if (i < last)
+        QuickSort(Array, i, last);
     return;
 }
 
@@ -124,6 +170,11 @@ void bucketSort(int Array[], int length){
         vectorSelectSort(fourthVector);
         vectorSelectSort(fifthVector);
 
+        cout<<"firstVec: ";
+        for(unsigned int k=0; k<firstVector.size(); k++){
+            cout<<firstVector[k];
+        }
+
         int counter=0;
         for(unsigned int k=counter; k<firstVector.size(); k++){       //combines the vectors into the array
             Array[k]=firstVector[k];
@@ -166,7 +217,7 @@ bool isUnique2(int A[], int first, int last){
         return true;
     }
     for(int k=first; k<last; k++){
-        for(int j=k+1; j<=last; j++){
+        for(int j=k+1; j<last; j++){
             if(A[k]==A[j]){
                 return false;
             }
@@ -180,8 +231,8 @@ bool isUnique3(int A[], int first, int last){
     if(first>=last){
         return true;
     }
-    
-    bucketSort(A, last);//assuming bucket sort is the fastest
+
+    selectionSort(A,last);//assuming bucket sort is the fastest
     for(int i=first; i<last; i++){
         if(A[i]==A[i+1]){
             return false;
@@ -191,52 +242,91 @@ bool isUnique3(int A[], int first, int last){
 }
 
 int main(){
-    int length=20;
-    int Array[length];
-    randomArray(length,Array);
-    int bubbleArray[length];
-    for(int k=0; k<length; k++){  //makes bubbleArray a copy of Array
-        bubbleArray[k]=Array[k];
-    }
-    bubbleSort(bubbleArray, length);
+//        int Array[length];
+//        cout << "Array has been initialized" << endl;
+//        randomArray(length,Array);
+/*        cout<<"Array: ";
+        for(int k=0; k<length; k++){
+            cout<<Array[k]<<"|";
+        }
+        cout<<endl;
+//    cout << "After random generation" << endl;
 
-    int selectionArray[length];
-    for(int k=0; k<length; k++){  //makes selectionArray a copy of Array
-        selectionArray[k]=Array[k];
-    }
-    selectionSort(selectionArray, length);  // selection sort
+        int bubbleArray[length];
+        for(int k=0; k<length; k++){  //makes bubbleArray a copy of Array
+            bubbleArray[k]=Array[k];
+        }
+        bubbleSort(bubbleArray, length);
+        cout << "bubbleArray: ";
+        for(int k=0; k<length; k++){
+            cout<<bubbleArray[k]<<"|";
+        }cout<<endl;
 
-    int bucketArray[length];
-    for(int k=0; k<length; k++){  //makes bucketArray a copy of Array
-        bucketArray[k]=Array[k];
-    }
-    bucketSort(bucketArray, length);
-   // for(int k=0; k<length; k++){
-     //   cout<<"bucket: "<<bucketArray[k]<<endl;
-    //}
-    
-     std::clock_t    start1;
+        int selectionArray[length];
+        for(int k=0; k<length; k++){  //makes selectionArray a copy of Array
+            selectionArray[k]=Array[k];
+        }
+        selectionSort(selectionArray, length);  // selection sort
+        cout<<"selectionArray: ";
+        for(int k=0; k<length; k++){
+            cout<<selectionArray[k]<<"|";
+        }cout<<endl;
 
-     start1 = std::clock();
-     if(isUnique1(Array,0,length)==true){
-      cout<<"Algorithm 1 says it is unique."<< endl;
-     }
-     std::cout << "Time: " << (std::clock() - start1) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
-     
+
+
+        int QuickArray[length];
+        for(int k=0; k<length; k++){  //makes QuickArray a copy of Array
+            QuickArray[k]=Array[k];
+        }
+        QuickSort(QuickArray, 0, length-1);
+        cout << "quickArray: ";
+        for(int k=0; k<length; k++){
+            cout<<QuickArray[k]<<"|";
+        }
+        cout << endl;
+*//*
+        for(int k=0; k<34; k++){
+            int Array[length];
+            randomArray(length,Array);
+
+        clock_t    start1;
+
+        start1 = std::clock();
+        cout << "Before Algorithm 1" << std::endl;
+        if(isUnique1(Array,0,length)==true){
+            cout<<"Algorithm 1 says it is unique."<< endl;
+        }
+        cout << "After Algorithm 1" << std::endl;
+        double time1=(std::clock() - start1) / (double)(CLOCKS_PER_SEC / 1000);
+        cout<<"length of "<<length<<" time--> isUnique1: "<<time1/1000.0<<" sec"<<endl;
+        }*/
+/*
+  for(int length=195000; length<=1000000; length=length+5000){
+     int Array[length];
+     randomArray(length,Array);
      std::clock_t    start2;
 
      start2 = std::clock();
      if(isUnique2(Array, 0, length)==true){
       cout<<"Algorithm 2 says it is unique."<< endl;
      }
-     std::cout << "Time: " << (std::clock() - start2) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
-     
+     double time2=(std::clock() - start2) / (double)(CLOCKS_PER_SEC / 1000);
+     cout<<"length of "<<length<<" time--> isUnique2: "<<time2/1000.0<<" sec"<<endl;
+  }*/
+
+  for(int length=150000; length<1000000; length=length+5000){
+     int Array[length];
+     randomArray(length,Array);
      std::clock_t    start3;
 
      start3 = std::clock();
+     PrintArray(length,Array);
      if(isUnique3(Array, 0, length)==true){
       cout<<"Algorithm 3 says it is unique."<< endl;
      }
-     std::cout << "Time: " << (std::clock() - start3) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
+     double time3=(std::clock() - start3) / (double)(CLOCKS_PER_SEC / 1000);
+     cout<<"length of "<<length<<" time--> isUnique3: "<<time3/1000.0<<" sec"<<endl;
+  }
+
     return 0;
 }
