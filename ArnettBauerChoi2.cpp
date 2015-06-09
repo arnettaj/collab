@@ -11,49 +11,12 @@ Postconditions: returns a table with the times of the different algorithms on di
 #include<iostream>
 #include<stdlib.h>
 #include<time.h>
+#include<ctime>
 #include<vector>
 
 using namespace std;
 
-bool isUnique1(int A[], int first, int last){
-    if(first>=last){
-        return true;
-    }
-    if(!isUnique1(A, first, last-1)){
-        return false;
-    }
-    if(!isUnique1(A, first+1, last)){
-       return false;
-    }
-    return (A[first]!=A[last]);
-}
 
-bool isUnique2(int A[], int first, int last){
-    if(first>=last){
-        return true;
-    }
-    for(int k=first; k<last; k++){
-        for(int j=k+1; j<=last; j++){
-            if(A[first]==A[last]){
-                return false;
-            }
-        }
-    }
-    return true;
-}
-
-bool isUnique3(int A[], int first, int last){
-    if(first>=last){
-        return true;
-    }
-    //sorter(A, first, last);
-    for(int i=first; i<last; i++){
-        if(A[i]==A[i+1]){
-            return false;
-        }
-    }
-    return true;
-}
 
 void randomArray(int length, int A[]){      //assigns values to the inputted array.
     srand((unsigned)time(NULL));
@@ -100,7 +63,7 @@ void bubbleSort(int A[], int length){   //classic bubble sort
     return;
 }
 
-void vectorSelectSort(vector<int> A){
+void vectorSelectSort(vector<int> A){//helper function for bucketsort
     int tempArray[A.size()];
     for(unsigned int k=0; k<A.size(); k++){   //make vector into array
         tempArray[k]=A[k];
@@ -125,7 +88,7 @@ void bucketSort(int Array[], int length){
     }
     if(length<=20){
         selectionSort(Array,length);
-        cout<<"SELECTION SORT USED"<<endl;
+        //cout<<"SELECTION SORT USED"<<endl;
     }
     else{
         int fakerange=(maxxi-minni)-((maxxi-minni)%5);
@@ -185,6 +148,47 @@ void bucketSort(int Array[], int length){
     return;
 }
 
+bool isUnique1(int A[], int first, int last){
+    if(first>=last){
+        return true;
+    }
+    if(!isUnique1(A, first, last-1)){
+        return false;
+    }
+    if(!isUnique1(A, first+1, last)){
+       return false;
+    }
+    return (A[first]!=A[last]);
+}
+
+bool isUnique2(int A[], int first, int last){
+    if(first>=last){
+        return true;
+    }
+    for(int k=first; k<last; k++){
+        for(int j=k+1; j<=last; j++){
+            if(A[k]==A[j]){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+bool isUnique3(int A[], int first, int last){
+    if(first>=last){
+        return true;
+    }
+    
+    bucketSort(A, last);//assuming bucket sort is the fastest
+    for(int i=first; i<last; i++){
+        if(A[i]==A[i+1]){
+            return false;
+        }
+    }
+    return true;
+}
 
 int main(){
     int length=20;
@@ -207,8 +211,32 @@ int main(){
         bucketArray[k]=Array[k];
     }
     bucketSort(bucketArray, length);
-    for(int k=0; k<length; k++){
-        cout<<"bucket: "<<bucketArray[k]<<endl;
-    }
+   // for(int k=0; k<length; k++){
+     //   cout<<"bucket: "<<bucketArray[k]<<endl;
+    //}
+    
+     std::clock_t    start1;
+
+     start1 = std::clock();
+     if(isUnique1(Array,0,length)==true){
+      cout<<"Algorithm 1 says it is unique."<< endl;
+     }
+     std::cout << "Time: " << (std::clock() - start1) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
+     
+     std::clock_t    start2;
+
+     start2 = std::clock();
+     if(isUnique2(Array, 0, length)==true){
+      cout<<"Algorithm 2 says it is unique."<< endl;
+     }
+     std::cout << "Time: " << (std::clock() - start2) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
+     
+     std::clock_t    start3;
+
+     start3 = std::clock();
+     if(isUnique3(Array, 0, length)==true){
+      cout<<"Algorithm 3 says it is unique."<< endl;
+     }
+     std::cout << "Time: " << (std::clock() - start3) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
     return 0;
 }
