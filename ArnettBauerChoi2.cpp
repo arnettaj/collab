@@ -4,8 +4,8 @@ Course: Data Structures
 Instructor: Anca Ralescu
 TA: Suryadip Chakraborty
 Abstract:  The program times 3 different algorithms for checking different sized arrays for repeated elements.
-Preconditions:  none
-Postconditions: returns a table with the times of the different algorithms on different sized arrays.
+Preconditions:  You may have to uncomment things if you want to test sorting algorithms and other things. We left them in the state when we find the size of the array for which the isunique algorithms run in one minute or less.
+Postconditions: returns the times of the different algorithms on different sized arrays.
 */
 
 #include<iostream>
@@ -19,7 +19,7 @@ using namespace std;
 
 
 void randomArray(int length, int A[]){      //assigns values to the inputted array.
-    for(int k=0; k<length; k++){
+  /*  for(int k=0; k<length; k++){
         A[k]=length-k;
     }
     int temp;
@@ -27,6 +27,10 @@ void randomArray(int length, int A[]){      //assigns values to the inputted arr
         temp=A[k+1];
         A[k+1]=A[k];
         A[k]=temp;
+    }*/
+    
+    for(int k=0; k<length; k++){
+        A[k]=k;
     }
     return;
 }
@@ -292,16 +296,16 @@ int main(){
         clock_t    start1;
 
         start1 = std::clock();
-        cout << "Before Algorithm 1" << std::endl;
+        
         if(isUnique1(Array,0,length)==true){
             cout<<"Algorithm 1 says it is unique."<< endl;
         }
-        cout << "After Algorithm 1" << std::endl;
+        
         double time1=(std::clock() - start1) / (double)(CLOCKS_PER_SEC / 1000);
         cout<<"length of "<<length<<" time--> isUnique1: "<<time1/1000.0<<" sec"<<endl;
         }
 
-  for(int length=195000; length<=1000000; length=length+5000){
+  for(int length=0; length<=195000; length=length+5000){
      int Array[length];
      randomArray(length,Array);
      std::clock_t    start2;
@@ -314,7 +318,7 @@ int main(){
      cout<<"length of "<<length<<" time--> isUnique2: "<<time2/1000.0<<" sec"<<endl;
   }
 
-  for(int length=150000; length<1000000; length=length+5000){
+  for(int length=0; length<150000; length=length+5000){
      int Array[length];
      randomArray(length,Array);
      std::clock_t    start3;
